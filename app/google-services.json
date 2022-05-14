@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "403221666112",
+    "project_id": "ring-me-up-app",
+    "storage_bucket": "ring-me-up-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403221666112:android:e7d73a1ca5f16d5d3b82a5",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.android.ring_me_up_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403221666112-p5l8b7t6r2fmq5iabq1ahc8u32cbc80v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBv7D90g5LAhnDz-ajtWoiUoeta9E2tNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403221666112-p5l8b7t6r2fmq5iabq1ahc8u32cbc80v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
