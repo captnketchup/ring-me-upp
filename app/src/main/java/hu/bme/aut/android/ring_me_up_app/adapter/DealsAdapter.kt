@@ -35,13 +35,6 @@ class DealsAdapter(private val context: Context) :
         holder.tvDebtor.text = tmpDeal.debtor
         holder.tvDebtSum.text = tmpDeal.debtSum
 
-//        if (tmpDeal.imageUrl.isNullOrBlank()) {
-//            holder.imgPost.visibility = View.GONE
-//        } else {
-//            Glide.with(context).load(tmpDeal.imageUrl).into(holder.imgPost)
-//            holder.imgPost.visibility = View.VISIBLE
-//        }
-
         setAnimation(holder.itemView, position)
     }
 
