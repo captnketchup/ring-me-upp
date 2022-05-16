@@ -1,19 +1,28 @@
 package hu.bme.aut.android.ring_me_up_app
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.ring_me_up_app.data.Deal
+import hu.bme.aut.android.ring_me_up_app.data.User
 import hu.bme.aut.android.ring_me_up_app.databinding.ActivityCreateDealBinding
 import hu.bme.aut.android.ring_me_up_app.extensions.validateNonEmpty
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
@@ -31,28 +40,16 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         binding.btnSend.setOnClickListener { sendClick() }
 
-        val userArray = getAllUsers()        // this returns an array of users
-
-        val userArrayForSpinner = arrayOfNulls<String>(userArray.size)      // this is for the username of the users
-        for(i in userArray.indices){
-            userArrayForSpinner[i] = userArray[i].userName
-        }
-
-        val spinner: Spinner = findViewById(R.id.users_spinner)
-        spinner.onItemSelectedListener = this
-        ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_spinner_dropdown_item,
-            userArrayForSpinner
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-            spinner.adapter = adapter
+        lifecycle.coroutineScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                userList = getAllUsers() as MutableList<User>
+                updateSpinner()
+            }
         }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-         debtorName = parent.getItemAtPosition(pos) as String
+        debtorName = parent.getItemAtPosition(pos) as String
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -92,6 +89,24 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun updateSpinner(){
+        val userArrayForSpinner = userList.map{ user ->
+            user.userName
+        }
+
+        val spinner: Spinner = findViewById(R.id.users_spinner)
+        spinner.onItemSelectedListener = this
+        ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            userArrayForSpinner
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+            spinner.adapter = adapter
+        }
     }
 
 }

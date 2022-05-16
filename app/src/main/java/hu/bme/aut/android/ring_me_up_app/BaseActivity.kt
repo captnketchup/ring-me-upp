@@ -1,19 +1,18 @@
 package hu.bme.aut.android.ring_me_up_app
 
 import android.app.ProgressDialog
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.ring_me_up_app.data.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -30,6 +29,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected val userEmail: String?
         get() = firebaseUser?.email
+
+    protected var userList = mutableListOf<User>()
 
     fun showProgressDialog() {
         if (progressDialog != null) {
@@ -92,17 +93,18 @@ abstract class BaseActivity : AppCompatActivity() {
         return userData
     }
 
-    protected fun getAllUsers(): List<User> {
-        val db = Firebase.firestore
-        var userList = db.collection("users")
-            .get()
-            .result
-            .documents
-            .map { document ->
-                document.toObject<User>()
-            }
 
-        return userList.filterNotNull()
+    protected suspend fun getAllUsers(): List<User> {
+        return withContext(Dispatchers.IO) {
+            val db = Firebase.firestore
+            val _userList = db.collection("users")
+                .get()
+                .await()
+                .documents
+                .map{ document ->
+                    document.toObject<User>()
+                }
+            _userList.filterNotNull()
+        }
     }
-
 }
