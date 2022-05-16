@@ -14,12 +14,6 @@
         android:id="@+id/users_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-<!--    <EditText-->
-<!--        android:id="@+id/etDebtor"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Debtor"-->
-<!--        android:maxLines="1" />-->
 
     <EditText
         android:id="@+id/etDebtSum"
@@ -29,6 +23,13 @@
         android:inputType="number"
         android:maxLines="10"
         android:scrollHorizontally="false" />
+
+    <EditText
+        android:id="@+id/etItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the item "
+        android:scrollHorizontally="false"/>
 
     <Button
         android:id="@+id/btnSend"

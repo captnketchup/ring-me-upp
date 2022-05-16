@@ -23,6 +23,7 @@ import hu.bme.aut.android.ring_me_up_app.extensions.validateNonEmpty
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
@@ -65,15 +66,18 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun validateForm() =
-//        binding.etDebtor.validateNonEmpty() && binding.etDebtSum.validateNonEmpty()
-        binding.etDebtSum.validateNonEmpty()
+        binding.etDebtSum.validateNonEmpty() && binding.etItem.validateNonEmpty()
 
     private fun uploadDeal() {
         val newDeal = Deal(
             uid,
             userName,
             debtorName,
-            binding.etDebtSum.text.toString() + " Ft"
+            binding.etDebtSum.text.toString() + " Ft",
+            binding.etItem.text.toString(),
+            "${Calendar.getInstance().get(Calendar.YEAR)}.${
+                Calendar.getInstance().get(Calendar.MONTH) + 1      // for whatever reason Java Calendar is one less 
+            }.${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
         )
 
         val db = Firebase.firestore

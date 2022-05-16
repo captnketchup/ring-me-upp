@@ -25,20 +25,23 @@
             card_view:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvDebtor"
+                android:id="@+id/tvAdded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold" />
+                android:hint="You added valami"/>
 
             <TextView
-                android:id="@+id/tvDebtSum"
+                android:id="@+id/tvGetBack"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:hint="You get back 42 Ft"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="2018.06.30."/>
 
         </LinearLayout>
 

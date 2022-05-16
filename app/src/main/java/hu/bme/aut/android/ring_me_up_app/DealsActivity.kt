@@ -28,6 +28,8 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         binding = ActivityDealsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         setSupportActionBar(binding.appBarDeals.toolbar)
