@@ -91,10 +91,15 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun updateSpinner(){
-        val userArrayForSpinner = userList.map{ user ->
-            user.userName
-        }
+    private fun updateSpinner() {
+        val userArrayForSpinner = userList
+            .map { user ->
+                user.userName
+            }
+            .filter {
+                it != userName
+            }
+
 
         val spinner: Spinner = findViewById(R.id.users_spinner)
         spinner.onItemSelectedListener = this
