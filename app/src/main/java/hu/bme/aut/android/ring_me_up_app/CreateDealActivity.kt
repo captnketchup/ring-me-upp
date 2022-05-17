@@ -15,6 +15,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.ring_me_up_app.data.Deal
 import hu.bme.aut.android.ring_me_up_app.data.User
@@ -23,6 +24,7 @@ import hu.bme.aut.android.ring_me_up_app.extensions.validateNonEmpty
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
@@ -76,7 +78,8 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             binding.etDebtSum.text.toString() + " Ft",
             binding.etItem.text.toString(),
             "${Calendar.getInstance().get(Calendar.YEAR)}.${
-                Calendar.getInstance().get(Calendar.MONTH) + 1      // for whatever reason Java Calendar is one less 
+                Calendar.getInstance()
+                    .get(Calendar.MONTH) + 1      // for whatever reason Java Calendar is one less 
             }.${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
         )
 
@@ -89,10 +92,20 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 finish()
             }
             .addOnFailureListener { e -> toast(e.toString()) }
+//
+//        launch {
+//            adjustBalance(newDeal)
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom);
     }
 
     private fun updateSpinner() {
@@ -117,5 +130,58 @@ class CreateDealActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             spinner.adapter = adapter
         }
     }
+
+//    private suspend fun adjustBalance(deal: Deal) {
+//        val db = Firebase.firestore
+//
+//        /**
+//         * adjust debtor balance -
+//         */
+//        var authorList = db.collection("users")
+//            .get()
+//            .await()
+//            .documents
+//            .map { document ->
+//                document.toObject<User>()
+//            }
+//            .filter { it?.userName == deal.author }
+//
+//        if(authorList.firstOrNull() == null) {
+//            Log.d(TAG, "User wasn't found in balance adjust query")
+//            return
+//        }
+//        var author = authorList[0]
+//        var currentBalance = author?.totalOwedTo
+//
+//        currentBalance += deal.debtSum?.toDouble() ?: 0.0   // increase balance
+//        db.collection("users")
+//            .document("${deal.debtor}")
+//            .update("totalOwedFrom", currentBalance.toString())
+//            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//            .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+//
+//
+//        /**
+//         *  adjust author balance +
+//         */
+//        db.collection("users")
+//            .document("${deal.author}")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                currentBalance = documents.get("totalOwedTo").toString().toDouble()
+//                Log.d(TAG, "current balance ${currentBalance} queried")
+//            }
+//            .addOnFailureListener {
+//                Log.d(TAG, "Error getting documents")
+//            }
+//
+//        currentBalance += deal.debtSum?.toDouble() ?: 0.0   // increase balance
+//        db.collection("users")
+//            .document("${deal.debtor}")
+//            .update("totalOwedTo", currentBalance.toString())
+//            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//            .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+//
+//    }
 
 }

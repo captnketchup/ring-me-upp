@@ -8,9 +8,10 @@
     <include
         android:id="@+id/content_deals"
         layout="@layout/content_deals" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="135dp"
         android:theme="@style/Theme.Ringmeupapp.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -24,12 +25,12 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.flaviofaria.kenburnsview.KenBurnsView
-                android:id="@+id/header"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_goodman"
-                app:layout_collapseMode="parallax" />
+            <!--            <com.flaviofaria.kenburnsview.KenBurnsView-->
+            <!--                android:id="@+id/header"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:src="@mipmap/ic_goodman"-->
+            <!--                app:layout_collapseMode="parallax" />-->
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

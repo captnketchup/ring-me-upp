@@ -1,6 +1,8 @@
 package hu.bme.aut.android.ring_me_up_app
 
 import android.app.ProgressDialog
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -75,22 +77,25 @@ abstract class BaseActivity : AppCompatActivity() {
         return userData
     }
 
-    protected fun getUserByName(userName: String?): User {
-        val db = Firebase.firestore
-        var userData = User("", "", "", "")
-        db.collection("users")
-            .whereEqualTo("userName", userName)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    userData = document.toObject<User>()
+    protected suspend fun getUserByName(userName: String?): User {
+        return withContext(Dispatchers.IO){
+            val db = Firebase.firestore
+            var users = db.collection("users")
+                .whereEqualTo("userName", userName)
+                .get()
+                .await()
+                .documents
+                .map { document ->
+                    document.toObject<User>()
                 }
-                if (documents.size() > 1) {
-                    throw Exception("More than one user queried with this ID")
+            var user = User("", "", "", "")
+            for (_user in users){
+                if (_user != null) {
+                    user = _user
                 }
             }
-
-        return userData
+            return@withContext user
+        }
     }
 
 

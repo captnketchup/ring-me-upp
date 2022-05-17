@@ -6,5 +6,6 @@ data class Deal(
     val debtor: String? = null,
     val debtSum: String? = null,
     val item: String? = null,
-    val date: String? = null
+    val date: String? = null,
+    val isSettled: Boolean = false
 )

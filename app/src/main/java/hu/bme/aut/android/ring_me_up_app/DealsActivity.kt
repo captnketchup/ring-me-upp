@@ -51,6 +51,7 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         binding.appBarDeals.fab.setOnClickListener {
             val createDealIntent = Intent(this, CreateDealActivity::class.java)
             startActivity(createDealIntent)
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
         }
 
         initDealsListener()
@@ -61,7 +62,12 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_logout -> {
                 FirebaseAuth.getInstance().signOut()
                 startActivity(Intent(this, MainActivity::class.java))
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
                 finish()
+            }
+            R.id.nav_profile -> {
+                startActivity(Intent(this, UserActivity::class.java))
+                overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom);
             }
         }
 
