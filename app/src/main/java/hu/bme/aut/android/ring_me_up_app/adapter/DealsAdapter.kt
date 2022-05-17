@@ -11,7 +11,6 @@ import android.widget.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.WriteBatch
@@ -19,7 +18,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.ring_me_up_app.data.Deal
 import hu.bme.aut.android.ring_me_up_app.databinding.CardDealBinding
-import org.w3c.dom.Text
 
 class DealsAdapter(private val context: Context) :
     ListAdapter<Deal, DealsAdapter.DealViewHolder>(itemCallback) {
@@ -63,14 +61,14 @@ class DealsAdapter(private val context: Context) :
                 .whereEqualTo("dealID",tmpDeal.dealID)
                 .get()
                 .addOnSuccessListener {
-                    var batch: WriteBatch = db.batch()
-                    var doc: List<DocumentSnapshot> = it.documents
+                    val batch: WriteBatch = db.batch()
+                    val doc: List<DocumentSnapshot> = it.documents
                     for (snapshot in doc) {
                         batch.delete(snapshot.reference)
                     }
                     batch.commit()
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG)
+                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show()
                         }
                 }
         }
@@ -81,7 +79,7 @@ class DealsAdapter(private val context: Context) :
     fun addDeal(deal: Deal?) {
         deal ?: return
         if (deal.author == userName || deal.debtor == userName) {
-            dealList += (deal)
+            dealList = dealList + (deal)
             submitList((dealList))
         } else {
             return

@@ -1,8 +1,6 @@
 package hu.bme.aut.android.ring_me_up_app
 
 import android.app.ProgressDialog
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -28,9 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected val userName: String?
         get() = firebaseUser?.displayName
-
-    protected val userEmail: String?
-        get() = firebaseUser?.email
 
     protected var userList = mutableListOf<User>()
 

@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,6 @@ import hu.bme.aut.android.ring_me_up_app.databinding.ActivityDealsBinding
 
 class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDealsBinding
     private lateinit var dealsAdapter: DealsAdapter
 
@@ -67,7 +65,7 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.nav_profile -> {
                 startActivity(Intent(this, UserActivity::class.java))
-                overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom);
+                overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
             }
         }
 

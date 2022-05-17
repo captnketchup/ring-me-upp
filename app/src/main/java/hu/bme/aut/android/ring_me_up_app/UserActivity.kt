@@ -1,9 +1,7 @@
 package hu.bme.aut.android.ring_me_up_app
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import hu.bme.aut.android.ring_me_up_app.databinding.ActivityUserBinding
 
