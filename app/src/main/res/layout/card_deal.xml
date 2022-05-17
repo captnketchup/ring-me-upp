@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -45,14 +46,32 @@
 
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/cbIsSettled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/bnIsSettled"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:drawableBottom="@drawable/ic_baseline_check_24"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="@+id/guideline3"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="52dp"
+            android:layout_height="19dp"
+            android:hint="Settled?"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            android:onClick="itemClicked"/>
+            card_view:layout_constraintHorizontal_bias="0.692"
+            card_view:layout_constraintStart_toStartOf="@+id/guideline3"
+            card_view:layout_constraintTop_toBottomOf="@+id/bnIsSettled"
+            card_view:layout_constraintVertical_bias="0.23" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            card_view:layout_constraintGuide_end="55dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

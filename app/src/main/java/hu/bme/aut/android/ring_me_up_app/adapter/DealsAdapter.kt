@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.WriteBatch
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import hu.bme.aut.android.ring_me_up_app.data.Deal
 import hu.bme.aut.android.ring_me_up_app.databinding.CardDealBinding
 import org.w3c.dom.Text
@@ -30,7 +32,7 @@ class DealsAdapter(private val context: Context) :
         val tvAdded: TextView = binding.tvAdded
         val tvGetBack: TextView = binding.tvGetBack
         val tvDate: TextView = binding.tvDate
-        val cbIsSettled: CheckBox = binding.cbIsSettled
+        val bnIsSettled: Button = binding.bnIsSettled
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -54,7 +56,24 @@ class DealsAdapter(private val context: Context) :
             holder.tvDate.text = tmpDeal.date
         }
 
+        holder.bnIsSettled.setOnClickListener {
+            val db = Firebase.firestore
 
+            db.collection("deals")
+                .whereEqualTo("dealID",tmpDeal.dealID)
+                .get()
+                .addOnSuccessListener {
+                    var batch: WriteBatch = db.batch()
+                    var doc: List<DocumentSnapshot> = it.documents
+                    for (snapshot in doc) {
+                        batch.delete(snapshot.reference)
+                    }
+                    batch.commit()
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG)
+                        }
+                }
+        }
 
         setAnimation(holder.itemView, position)
     }
@@ -86,13 +105,6 @@ class DealsAdapter(private val context: Context) :
             override fun areContentsTheSame(oldItem: Deal, newItem: Deal): Boolean {
                 return oldItem == newItem
             }
-        }
-    }
-
-    public fun itemClicked(v: View){
-        val checkBox: CheckBox = v as CheckBox
-        if (checkBox.isChecked){
-            // todo: make deal settled in firebase
         }
     }
 }
