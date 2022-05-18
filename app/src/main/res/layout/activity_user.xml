@@ -24,33 +24,33 @@
         android:paddingRight="24dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/ivCashRegister"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvHelloUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hello XY!"
+            android:hint="@string/hello_xy"
             android:textSize="40sp" />
 
         <TextView
             android:id="@+id/tvBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your current balance is: 500 Ft" />
+            android:hint="@string/your_current_balance_is_500_ft" />
 
         <TextView
             android:id="@+id/tvYouOwe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Overall you owe: 50 Ft" />
+            android:hint="@string/overall_you_owe_50_ft" />
 
         <TextView
             android:id="@+id/tvYoureOwed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Overall you're owed: 50 Ft" />
+            android:hint="@string/overall_you_re_owed_50_ft" />
 
 
     </LinearLayout>

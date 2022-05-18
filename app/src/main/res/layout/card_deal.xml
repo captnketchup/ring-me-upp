@@ -29,20 +29,20 @@
                 android:id="@+id/tvAdded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="You added valami" />
+                android:hint="@string/you_added_valami" />
 
             <TextView
                 android:id="@+id/tvGetBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="You get back 42 Ft"
+                android:hint="@string/you_get_back_42_ft"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="2018.06.30." />
+                android:hint="@string/_2018_06_30" />
 
         </LinearLayout>
 
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="52dp"
             android:layout_height="19dp"
-            android:hint="Settled?"
+            android:hint="@string/settled"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.692"

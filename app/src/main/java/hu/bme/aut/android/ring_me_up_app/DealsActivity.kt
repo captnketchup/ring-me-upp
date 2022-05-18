@@ -85,14 +85,7 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 for (dc in snapshots!!.documentChanges) {
                     when (dc.type) {
                         DocumentChange.Type.ADDED -> dealsAdapter.addDeal(dc.document.toObject<Deal>())
-                        DocumentChange.Type.MODIFIED -> Toast.makeText(
-                            this,
-                            dc.document.data.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
                         DocumentChange.Type.REMOVED -> {
-                            Toast.makeText(this, dc.document.data.toString(), Toast.LENGTH_SHORT)
-                                .show()
                             finish()
                             startActivity(intent)
                         }
@@ -102,7 +95,6 @@ class DealsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onBackPressed() {
-//        super.onBackPressed()
         Toast.makeText(
             this,
             "Press logout on the sliding nav component to logout",

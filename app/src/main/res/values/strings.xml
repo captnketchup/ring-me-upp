@@ -11,4 +11,19 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="enter_the_owed_sum">Enter the owed sum</string>
+    <string name="enter_the_item">Enter the item</string>
+    <string name="send">Send</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="hello_xy">Hello XY!</string>
+    <string name="your_current_balance_is_500_ft">Your current balance is: 500 Ft</string>
+    <string name="overall_you_owe_50_ft">Overall you owe: 50 Ft</string>
+    <string name="overall_you_re_owed_50_ft">Overall you\'re owed: 50 Ft</string>
+    <string name="you_added_valami">You added valami</string>
+    <string name="you_get_back_42_ft">You get back 42 Ft</string>
+    <string name="_2018_06_30">2018.06.30.</string>
+    <string name="settled">Settled?</string>
 </resources>

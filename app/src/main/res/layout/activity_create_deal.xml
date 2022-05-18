@@ -19,7 +19,7 @@
         android:id="@+id/etDebtSum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the owed sum"
+        android:hint="@string/enter_the_owed_sum"
         android:inputType="number"
         android:maxLines="10"
         android:scrollHorizontally="false" />
@@ -28,13 +28,13 @@
         android:id="@+id/etItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item "
+        android:hint="@string/enter_the_item"
         android:scrollHorizontally="false"/>
 
     <Button
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send" />
+        android:text="@string/send" />
 
 </LinearLayout>

@@ -25,6 +25,7 @@ class DealsAdapter(private val context: Context) :
     private var dealList: List<Deal> = emptyList()
     private var lastPosition = -1
     private val userName = FirebaseAuth.getInstance().currentUser?.displayName
+    private val usedDealList = mutableListOf<Int>()
 
     class DealViewHolder(binding: CardDealBinding) : RecyclerView.ViewHolder(binding.root) {
         val tvAdded: TextView = binding.tvAdded
@@ -38,6 +39,12 @@ class DealsAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: DealViewHolder, position: Int) {
         val tmpDeal = dealList[position]
+        if(usedDealList.isEmpty()){
+            balance = 0.0
+            owe_plus = 0.0
+            owe_minus = 0.0
+        }
+
 
         /**
          * checks whether user is the debtor or debtee and constructs the holder according to that
@@ -45,20 +52,32 @@ class DealsAdapter(private val context: Context) :
         if (tmpDeal.author == userName) {
             holder.tvAdded.text = Html.fromHtml("<b>You</b> added <b>${tmpDeal.item}</b>")
             holder.tvGetBack.setTextColor(Color.parseColor("#a8cf95"))
-            holder.tvGetBack.text = Html.fromHtml("<b>You</b> get back ${tmpDeal.debtSum} from ${tmpDeal.debtor}")
+            holder.tvGetBack.text =
+                Html.fromHtml("<b>You</b> get back ${tmpDeal.debtSum} from ${tmpDeal.debtor}")
             holder.tvDate.text = tmpDeal.date
+            if (!usedDealList.contains(tmpDeal.dealID) && tmpDeal.dealID != null) {
+                usedDealList.add(tmpDeal.dealID)
+                owe_plus += tmpDeal.debtSum?.split(" ")?.get(0)?.toDouble() ?: 0.0
+                balance += tmpDeal.debtSum?.split(" ")?.get(0)?.toDouble() ?: 0.0
+            }
         } else if (tmpDeal.debtor == userName) {
-            holder.tvAdded.text = Html.fromHtml("<b>${tmpDeal.author}</b> added <b>${tmpDeal.item}</b>")
+            holder.tvAdded.text =
+                Html.fromHtml("<b>${tmpDeal.author}</b> added <b>${tmpDeal.item}</b>")
             holder.tvGetBack.setTextColor(Color.parseColor("#ab4f4f"))
             holder.tvGetBack.text = Html.fromHtml("<b>You</b> owe ${tmpDeal.debtSum}")
             holder.tvDate.text = tmpDeal.date
+            if (!usedDealList.contains(tmpDeal.dealID) && tmpDeal.dealID != null) {
+                usedDealList.add(tmpDeal.dealID)
+                owe_minus += tmpDeal.debtSum?.split(" ")?.get(0)?.toDouble() ?: 0.0
+                balance -= tmpDeal.debtSum?.split(" ")?.get(0)?.toDouble() ?: 0.0
+            }
         }
 
         holder.bnIsSettled.setOnClickListener {
             val db = Firebase.firestore
 
             db.collection("deals")
-                .whereEqualTo("dealID",tmpDeal.dealID)
+                .whereEqualTo("dealID", tmpDeal.dealID)
                 .get()
                 .addOnSuccessListener {
                     val batch: WriteBatch = db.batch()
@@ -68,7 +87,8 @@ class DealsAdapter(private val context: Context) :
                     }
                     batch.commit()
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG)
+                                .show()
                         }
                 }
         }
@@ -95,6 +115,10 @@ class DealsAdapter(private val context: Context) :
     }
 
     companion object {
+        var balance = 0.0
+        var owe_plus = 0.0
+        var owe_minus = 0.0
+
         object itemCallback : DiffUtil.ItemCallback<Deal>() {
             override fun areItemsTheSame(oldItem: Deal, newItem: Deal): Boolean {
                 return oldItem.uid == newItem.uid
